@@ -1,31 +1,67 @@
-## Create your zsh xxh plugin
-1. Fork this repo
-2. Edit the plugin files:
-    * `pluginrc.zsh` -  this script will be executed on the host when you connect to the host. Put here your functions, environment variables, aliases and whatever you need.
-    * `build.sh` - this script should be executed to prepare the plugin on local xxh. It will be executed automatically if `build` directory is not exists.
-    * `env` - see description below     
-3. Replace this list to description of your xxh plugin (review other xxh plugins)
-4. Push your commits and rename your repo to `xxh-plugin-zsh-yourtitle`
-5. Install the plugin to your xxh home:
-```
-xxh +I xxh-plugin-zsh-yourtitle+git+https://github.com/yourname/xxh-plugin-zsh-yourtitle
-```
-6. Try connect in update mode: `xxh [user@]host[:port] +s zsh +if`
+# xxh-plugin-zsh-advanced_p10k
 
-## `env` file
-The xxh has seamless environment mode which allows to pass variable from your current shell session 
-to the xxh host session. For example if you have `ZSH_THEME` variable with your shell color theme you shouldn't
-worry about passing it manually. Add it to `env` file (one variable name per line) and you can do the magic by using `source xxh.zsh` command:
+## Using
+
+1. Install xxh -> <https://github.com/xxh/xxh>
+
+2. Configure `$home/.config/xxh/config.xxhc`:
+
+    ```yaml
+    hosts:
+    ".*":                 # for all hosts
+        +s: zsh                 # use zsh shell
+        +RI:                    # reinstall xxh packages
+        - xxh-shell-zsh
+        - xxh-plugin-zsh-advanced_p10k+git+https://github.com/nilune/xxh-plugin-zsh-advanced_p10k
+        #+I:                    # install xxh packages (if not installed)
+        #  - xxh-shell-zsh
+        #  - xxh-plugin-zsh-advanced_p10k+git+https://github.com/nilune/xxh-plugin-zsh-advanced_p10k
+        +e:                     # set simple environment variables
+        - plugins="git copyfile copypath dirhistory sudo z zsh-autosuggestions fast-syntax-highlighting fzf-zsh-plugin"
+        - history_size="20"
+        #+hhh: "~"              # set /home/user as home directory
+        +hhh: "~/.xxh"          # set /home/user/.xxh as home directory
+        +if:                    # force install xxh every time
+    ```
+
+3. Connect to host:
+
+    ```bash
+    xxh $HOSTNAME
+    ```
+
+---
+
+Also it is possible to use with current configuration (but not recommended):
+
+```bash
+source xxh.zsh $HOSTNAME
 ```
-home> echo $ZSH_THEME
-agnoster
-home> source xxh.zsh myhost
-myhost> echo $ZSH_THEME
-agnoster
-``` 
-This very useful when you want to use the same tools on your local and remote host. 
 
-## Examples
-Pinned xxh zsh plugins: [ohmyzsh](https://github.com/xxh/xxh-plugin-zsh-ohmyzsh), [powerlevel10k](https://github.com/xxh/xxh-plugin-zsh-powerlevel10k)
+## Develop
 
-🔎 [Search xxh plugins on Github](https://github.com/search?q=xxh-plugin-zsh&type=Repositories) or [Bitbucket](https://bitbucket.org/repo/all?name=xxh-plugin-zsh) or 💡 [Create xxh plugin](https://github.com/xxh/xxh-plugin-zsh-example)
+1. Clone to local directory and `cd` to this directory. It is required for using plugin by argument `xxh-plugin-zsh-advanced_p10k+path+.`
+
+2. You can use or not use xxh config file (`$home/.config/xxh/config.xxhc`). If you do not using it, then use variables:
+   - `+s zsh`
+   - `+RI xxh-plugin-zsh-advanced_p10k+path+.`
+   - `+if`
+
+3. Connect to host, for example:
+
+    ```bash
+    xxh $HOSTNAME
+    ```
+
+    or
+
+    ```bash
+    xxh $HOSTNAME +s zsh +RI xxh-plugin-zsh-zshrc+path+. +if
+    ```
+
+4. Sometimes you should remove `.xxh` folder on target host:
+
+    ```bash
+    ssh $HOSTNAME
+    rm -rf .xxh
+    ```

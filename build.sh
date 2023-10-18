@@ -16,9 +16,12 @@ done
 rm -rf $build_dir
 mkdir -p $build_dir
 
+# Install script for installation variables on host
 cp $CDIR/pluginrc.zsh $build_dir/pluginrc.zsh
+
+# Set up p10k configuration file
 cp ~/.p10k.zsh $build_dir/p10k.zsh
-# cp ~/.fzf.zsh $build_dir/fzf.zsh
+### cp ~/.fzf.zsh $build_dir/fzf.zsh
 
 cd $build_dir
 
@@ -26,6 +29,7 @@ cd $build_dir
 [ $QUIET ] && arg_s='-s' || arg_s=''
 [ $QUIET ] && arg_progress='' || arg_progress='--show-progress'
 
+# Install fzf binary
 fzf_url='https://github.com/junegunn/fzf/releases/download/0.43.0/fzf-0.43.0-linux_amd64.tar.gz'
 fzf_tarname=`basename $fzf_url`
 if [ -x "$(command -v wget)" ]; then
@@ -43,14 +47,14 @@ rm $fzf_tarname
 ohmyzsh_home=$build_dir/ohmyzsh
 if [ -x "$(command -v git)" ]; then
   target_uname="linux x86_64"
-  # Install FZF
+  # Install fzf
   git clone $arg_q --depth 1 https://github.com/junegunn/fzf.git $build_dir/fzf
 
-  # Install P10K
+  # Install p10k
   git clone $arg_q --depth 1 https://github.com/romkatv/powerlevel10k.git $build_dir/powerlevel10k
   GITSTATUS_CACHE_DIR=$build_dir/powerlevel10k/gitstatus/usrbin $build_dir/powerlevel10k/gitstatus/install -f -s "${target_uname% *}" -m "${target_uname#* }"
 
-  # Install Oh-my-zsh and plugins
+  # Install oh-my-zsh, plugins and themes
   git clone $arg_q --depth 1 https://github.com/robbyrussell/oh-my-zsh.git ${ohmyzsh_home}
   git clone $arg_q --depth 1 https://github.com/romkatv/powerlevel10k.git ${ohmyzsh_home}/themes/powerlevel10k
   git clone $arg_q --depth 1 https://github.com/zdharma-continuum/fast-syntax-highlighting.git ${ohmyzsh_home}/plugins/fast-syntax-highlighting
