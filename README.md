@@ -8,20 +8,20 @@
 
     ```yaml
     hosts:
-    ".*":                 # for all hosts
+      ".*":                 # for all hosts
         +s: zsh                 # use zsh shell
-        +RI:                    # reinstall xxh packages
-        - xxh-shell-zsh
-        - xxh-plugin-zsh-advanced_p10k+git+https://github.com/nilune/xxh-plugin-zsh-advanced_p10k
-        #+I:                    # install xxh packages (if not installed)
-        #  - xxh-shell-zsh
-        #  - xxh-plugin-zsh-advanced_p10k+git+https://github.com/nilune/xxh-plugin-zsh-advanced_p10k
+        #+RI:                   # reinstall xxh packages
+        #- xxh-shell-zsh
+        #- xxh-plugin-zsh-advanced_p10k+git+https://github.com/nilune/xxh-plugin-zsh-advanced_p10k
+        +I:                     # install xxh packages (if not installed)
+          - xxh-shell-zsh
+          - xxh-plugin-zsh-advanced_p10k+git+https://github.com/nilune/xxh-plugin-zsh-advanced_p10k
         +e:                     # set simple environment variables
         - plugins="git copyfile copypath dirhistory sudo z zsh-autosuggestions fast-syntax-highlighting fzf-zsh-plugin"
         - history_size="20"
         #+hhh: "~"              # set /home/user as home directory
         +hhh: "~/.xxh"          # set /home/user/.xxh as home directory
-        +if:                    # force install xxh every time
+        #+if:                   # force install xxh every time
     ```
 
 3. Connect to host:
