@@ -37,6 +37,9 @@ zstyle ':omz:update' mode disabled
 source $CURR_DIR/ohmyzsh/oh-my-zsh.sh
 autoload -U compinit && compinit
 
+# Set fzf for shell
+source <(fzf --zsh)
+
 # Set up bash history
 if [[ -v history_size ]]; then
   if [[ $XXH_VERBOSE == '2' ]]; then

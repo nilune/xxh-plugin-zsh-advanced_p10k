@@ -30,7 +30,7 @@ cd $build_dir
 [ $QUIET ] && arg_progress='' || arg_progress='--show-progress'
 
 # Install fzf binary
-fzf_url='https://github.com/junegunn/fzf/releases/download/0.43.0/fzf-0.43.0-linux_amd64.tar.gz'
+fzf_url='https://github.com/junegunn/fzf/releases/download/v0.54.3/fzf-0.54.3-linux_amd64.tar.gz'
 fzf_tarname=`basename $fzf_url`
 if [ -x "$(command -v wget)" ]; then
   wget $arg_q $arg_progress $fzf_url -O $fzf_tarname

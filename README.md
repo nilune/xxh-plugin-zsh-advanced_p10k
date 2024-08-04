@@ -22,6 +22,7 @@
         #+hhh: "~"              # set /home/user as home directory
         +hhh: "~/.xxh"          # set /home/user/.xxh as home directory
         #+if:                   # force install xxh every time
+        ++pexpect-timeout: '60'
     ```
 
 3. Connect to host:
@@ -56,12 +57,18 @@ source xxh.zsh $HOSTNAME
     or
 
     ```bash
-    xxh $HOSTNAME +s zsh +RI xxh-plugin-zsh-zshrc+path+. +if
+    xxh $HOSTNAME +s zsh +RI xxh-plugin-zsh-advanced_p10k+path+. +if
     ```
 
-4. Sometimes you should remove `.xxh` folder on target host:
+4. Sometimes you should remove `.xxh` folder on target host or remove system folder with default plugins:
 
     ```bash
     ssh $HOSTNAME
     rm -rf .xxh
+    ```
+
+    or
+
+    ```bash
+    rm -rf ~/.xxh/.xxh/shells ~/.xxh/.xxh/plugins/
     ```
